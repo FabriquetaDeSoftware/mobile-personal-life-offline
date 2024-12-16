@@ -6,6 +6,7 @@ import {
 } from '@tabler/icons-react-native';
 import { Button } from '../components/button';
 import { Welcome } from '../components/welcome';
+import { router } from 'expo-router';
 
 export default function Home() {
   return (
@@ -21,7 +22,10 @@ export default function Home() {
             <Button.Title>Agenda</Button.Title>
             <Button.Icon icon={IconCalendarTime} />
           </Button.Root>
-          <Button.Root style={{ height: 150 }}>
+          <Button.Root
+            onPress={() => router.navigate(`/todo.list`)}
+            style={{ height: 150 }}
+          >
             <Button.Title>Tarefas</Button.Title>
             <Button.Icon icon={IconChecklist} />
           </Button.Root>
