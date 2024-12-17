@@ -9,7 +9,7 @@ import {
   useFonts,
 } from '@expo-google-fonts/rubik';
 import { Loading } from '../components/loading';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 
 export default function Layout() {

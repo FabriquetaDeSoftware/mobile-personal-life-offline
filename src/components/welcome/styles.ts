@@ -10,6 +10,7 @@ export const s = StyleSheet.create({
   },
   title: {
     fontSize: 24,
+    marginTop: 24,
     fontFamily: fontFamily.bold,
     color: colors.gray[600],
   },
