@@ -9,6 +9,8 @@ import {
   useFonts,
 } from '@expo-google-fonts/rubik';
 import { Loading } from '../components/loading';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 
 export default function Layout() {
   const [fontsLoaded] = useFonts({
@@ -24,12 +26,15 @@ export default function Layout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          contentStyle: { backgroundColor: colors.gray[200] },
-        }}
-      />
+      <SafeAreaProvider>
+        <StatusBar style="dark" />
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            contentStyle: { backgroundColor: colors.gray[200] },
+          }}
+        />
+      </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 }

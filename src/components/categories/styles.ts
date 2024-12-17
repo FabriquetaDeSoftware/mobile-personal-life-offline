@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export const s = StyleSheet.create({
   container: {
-    maxHeight: 36,
+    height: 'auto',
   },
   content: {
     gap: 8,

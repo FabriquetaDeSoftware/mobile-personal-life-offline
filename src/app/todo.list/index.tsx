@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import { Categories } from '@/src/components/categories';
 import { useState } from 'react';
 import { Card } from '@/src/components/list.card/card';
+import { Input } from '@/src/components/input';
 
 export default function TodoLists() {
   const categories = [
@@ -26,13 +27,14 @@ export default function TodoLists() {
 
   return (
     <View style={{ flex: 1, padding: 40, gap: 40 }}>
-      <View>
+      <View style={{ gap: 10 }}>
         <Categories
           data={categories}
           selected={selectedCategory}
           onSelect={handleSelectCategory}
           style={{ flex: 1, justifyContent: 'space-between' }}
         />
+        <Input />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ gap: 40 }}>
