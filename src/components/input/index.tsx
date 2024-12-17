@@ -1,11 +1,12 @@
 import { TextInput, TextInputProps, View } from 'react-native';
 import { s } from './styles';
 import { Button } from '../button';
+import { useState } from 'react';
 
 export function Input() {
   return (
     <View>
-      <TextInput style={s.input} editable multiline numberOfLines={4} />
+      <TextInput style={s.input} multiline numberOfLines={4} />
       <Button.Root
         style={{
           borderTopStartRadius: 0,
