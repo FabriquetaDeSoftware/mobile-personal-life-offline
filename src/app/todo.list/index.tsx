@@ -5,6 +5,7 @@ import { Categories } from '@/src/components/categories';
 import { useState } from 'react';
 import { Input } from '@/src/components/input';
 import { Cards } from '@/src/components/cards';
+import { colors } from '@/src/styles/colors';
 
 export default function TodoLists() {
   const categories = [
@@ -50,7 +51,14 @@ export default function TodoLists() {
           onSelect={handleSelectCategory}
           style={{ flex: 1, justifyContent: 'space-between' }}
         />
-        <Input>
+
+        <View>
+          <Input
+            multiline
+            numberOfLines={4}
+            placeholder="Adicionar tarefa"
+            placeholderTextColor={colors.gray[400]}
+          />
           <Button.Root
             style={{
               borderTopStartRadius: 0,
@@ -60,9 +68,9 @@ export default function TodoLists() {
               height: 45,
             }}
           >
-            <Button.Title>Submit</Button.Title>
+            <Button.Title>Adicionar</Button.Title>
           </Button.Root>
-        </Input>
+        </View>
       </View>
 
       <Cards data={filteredTasks} />
