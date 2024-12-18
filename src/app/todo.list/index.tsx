@@ -20,6 +20,9 @@ export default function TodoLists() {
     { id: '4', content: 'Tarefa 4', status: 'Excluido' },
     { id: '5', content: 'Tarefa 5', status: 'Pendente' },
     { id: '6', content: 'Tarefa 6', status: 'Concluido' },
+    { id: '7', content: 'Tarefa 7', status: 'Concluido' },
+    { id: '8', content: 'Tarefa 8', status: 'Concluido' },
+    { id: '9', content: 'Tarefa 9', status: 'Concluido' },
   ];
 
   const [selectedCategory, setSelectedCategory] = useState<string>('2');
@@ -27,6 +30,16 @@ export default function TodoLists() {
   const handleSelectCategory = (id: string) => {
     setSelectedCategory(id);
   };
+
+  const categoryMap: { [key: string]: string } = {
+    '1': 'Concluido',
+    '2': 'Pendente',
+    '3': 'Excluido',
+  };
+
+  const filteredTasks = tasks.filter(
+    (task) => task.status === categoryMap[selectedCategory]
+  );
 
   return (
     <View style={{ flex: 1, padding: 40, gap: 40, marginTop: 24 }}>
@@ -52,7 +65,7 @@ export default function TodoLists() {
         </Input>
       </View>
 
-      <Cards data={tasks} />
+      <Cards data={filteredTasks} />
 
       <Button.Root onPress={() => router.back()}>
         <Button.Title>Voltar</Button.Title>
