@@ -3,14 +3,15 @@ import { s } from './styles';
 import { Button } from '../../button';
 import { colors } from '@/src/styles/colors';
 
-export function Card() {
+interface Props {
+  content: string;
+}
+
+export function Card({ content }: Props) {
   return (
     <View>
       <View style={s.containerText}>
-        <Text style={s.contentText}>
-          a barata diz que tem sete saias de filo e mentira da barata ela tem e
-          uma so hahaha hohoho ela tem e uma so hahaha hohoho ela tem e uma so
-        </Text>
+        <Text style={s.contentText}>{content}</Text>
       </View>
       <View style={s.containerPressable}>
         <Button.Root
