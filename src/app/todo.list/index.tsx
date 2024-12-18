@@ -34,7 +34,19 @@ export default function TodoLists() {
           onSelect={handleSelectCategory}
           style={{ flex: 1, justifyContent: 'space-between' }}
         />
-        <Input />
+        <Input>
+          <Button.Root
+            style={{
+              borderTopStartRadius: 0,
+              borderTopEndRadius: 0,
+              borderBottomStartRadius: 8,
+              borderBottomEndRadius: 8,
+              height: 45,
+            }}
+          >
+            <Button.Title>Submit</Button.Title>
+          </Button.Root>
+        </Input>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ gap: 40 }}>
