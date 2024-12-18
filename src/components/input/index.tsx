@@ -1,13 +1,8 @@
-import { TextInput, View, ViewProps } from 'react-native';
+import { TextInput, TextInputProps } from 'react-native';
 import { s } from './styles';
 
-interface Props extends ViewProps {}
+interface Props extends TextInputProps {}
 
-export function Input({ children, ...rest }: Props) {
-  return (
-    <View>
-      <TextInput style={s.input} multiline numberOfLines={4} />
-      {children}
-    </View>
-  );
+export function Input({ ...rest }: Props) {
+  return <TextInput {...rest} style={s.input} />;
 }
