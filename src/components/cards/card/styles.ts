@@ -23,9 +23,4 @@ export const s = StyleSheet.create({
     fontFamily: fontFamily.regular,
     textAlign: 'justify',
   },
-  contentPressable: {
-    width: '50%',
-    borderTopStartRadius: 0,
-    borderTopEndRadius: 0,
-  },
 });

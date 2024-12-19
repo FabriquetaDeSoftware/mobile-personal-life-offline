@@ -56,7 +56,30 @@ export default function TodoLists() {
         />
       </View>
 
-      <Cards data={filteredTasks}></Cards>
+      <Cards data={filteredTasks}>
+        <Button.Root
+          style={{
+            width: '50%',
+            borderTopStartRadius: 0,
+            borderTopEndRadius: 0,
+            borderBottomEndRadius: 0,
+            backgroundColor: colors.gray[500],
+          }}
+        >
+          <Button.Title>Editar</Button.Title>
+        </Button.Root>
+        <Button.Root
+          style={{
+            width: '50%',
+            borderTopStartRadius: 0,
+            borderTopEndRadius: 0,
+            borderBottomStartRadius: 0,
+            backgroundColor: colors.red.base,
+          }}
+        >
+          <Button.Title>Excluir</Button.Title>
+        </Button.Root>
+      </Cards>
 
       <View style={{ flexDirection: 'row', gap: 10 }}>
         <Button.Root

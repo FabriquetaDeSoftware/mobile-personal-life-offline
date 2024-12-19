@@ -13,24 +13,7 @@ export function Card({ content, children }: Props) {
       <View style={s.containerText}>
         <Text style={s.contentText}>{content}</Text>
       </View>
-      <View style={s.containerPressable}>
-        <Button.Root
-          style={[
-            s.contentPressable,
-            { borderBottomEndRadius: 0, backgroundColor: colors.gray[500] },
-          ]}
-        >
-          <Button.Title>Editar</Button.Title>
-        </Button.Root>
-        <Button.Root
-          style={[
-            s.contentPressable,
-            { borderBottomStartRadius: 0, backgroundColor: colors.red.base },
-          ]}
-        >
-          <Button.Title>Excluir</Button.Title>
-        </Button.Root>
-      </View>
+      <View style={s.containerPressable}>{children}</View>
     </View>
   );
 }
