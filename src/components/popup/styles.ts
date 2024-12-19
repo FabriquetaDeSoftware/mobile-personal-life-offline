@@ -10,15 +10,16 @@ export const s = StyleSheet.create({
     padding: 40,
   },
   modalContent: {
-    backgroundColor: 'white',
+    backgroundColor: colors.gray[200],
     borderRadius: 10,
     padding: 20,
     width: '100%',
     shadowColor: colors.black.dark,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    gap: 10,
   },
   modalTitle: {
     fontSize: 18,

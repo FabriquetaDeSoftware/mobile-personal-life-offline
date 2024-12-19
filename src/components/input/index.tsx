@@ -3,6 +3,6 @@ import { s } from './styles';
 
 interface Props extends TextInputProps {}
 
-export function Input({ ...rest }: Props) {
-  return <TextInput {...rest} style={s.input} />;
+export function Input({ style, ...rest }: Props) {
+  return <TextInput {...rest} style={[s.input, style]} />;
 }

@@ -2,7 +2,7 @@ import { colors, fontFamily } from '@/src/styles/theme';
 import { StyleSheet } from 'react-native';
 
 const lineHeight = 18;
-const maxHeight = 4 * lineHeight;
+const maxHeight = 5 * lineHeight;
 
 export const s = StyleSheet.create({
   input: {
@@ -10,8 +10,7 @@ export const s = StyleSheet.create({
     backgroundColor: colors.gray[100],
     borderWidth: 1,
     borderColor: colors.gray[300],
-    borderTopStartRadius: 8,
-    borderTopEndRadius: 8,
+    borderRadius: 8,
     padding: 12,
     fontSize: 14,
     lineHeight,
