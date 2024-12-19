@@ -14,5 +14,6 @@ export const s = StyleSheet.create({
     padding: 12,
     fontSize: 14,
     lineHeight,
+    textAlignVertical: 'top',
   },
 });
