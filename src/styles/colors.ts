@@ -19,4 +19,9 @@ export const colors = {
     light: '#FDEDED',
     base: '#F94144',
   },
+
+  black: {
+    opacity50: 'rgba(0, 0, 0, 0.5)',
+    dark: '#000000',
+  },
 };
