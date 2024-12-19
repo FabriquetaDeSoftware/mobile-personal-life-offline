@@ -13,7 +13,6 @@ export function Category({ text, isSelected = false, ...rest }: Props) {
       style={[s.container, isSelected && s.containerSelected]}
       {...rest}
     >
-      {/* <Icon size={16} color={colors.gray[isSelected ? 100 : 400]} /> */}
       <Text style={[s.name, isSelected && s.nameSelected]}>{text}</Text>
     </Pressable>
   );

@@ -1,4 +1,4 @@
-import { Modal, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Button } from '../../components/button';
 import { router } from 'expo-router';
 import { Categories } from '@/src/components/categories';
@@ -7,6 +7,7 @@ import { Input } from '@/src/components/input';
 import { Cards } from '@/src/components/cards';
 import { colors } from '@/src/styles/colors';
 import { Popup } from '@/src/components/popup';
+import { fontFamily } from '@/src/styles/theme';
 
 export default function TodoLists() {
   const categories = [
@@ -72,39 +73,43 @@ export default function TodoLists() {
         </Button.Root>
       </View>
 
-      <Popup></Popup>
-      {/* <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Nova Tarefa</Text>
-            <Input placeholder="Digite o nome da tarefa" />
-            <Input
-              placeholder="Digite o nome da tarefa"
-              placeholderTextColor={colors.gray[400]}
-            />
-
-            <View style={{ flexDirection: 'row', gap: 10, marginTop: 20 }}>
-              <Button.Root
-                onPress={() => setModalVisible(false)}
-                style={{ width: '50%', backgroundColor: colors.gray[500] }}
-              >
-                <Button.Title>Cancelar</Button.Title>
-              </Button.Root>
-              <Button.Root
-                onPress={() => setModalVisible(false)}
-                style={{ width: '50%' }}
-              >
-                <Button.Title>Salvar</Button.Title>
-              </Button.Root>
-            </View>
-          </View>
+      <Popup isVisible={modalVisible}>
+        <Text
+          style={{
+            fontSize: 18,
+            fontFamily: fontFamily.bold,
+            marginBottom: 15,
+            textAlign: 'center',
+          }}
+        >
+          Nova Tarefa
+        </Text>
+        <Input
+          placeholder="Digite o nome da tarefa"
+          placeholderTextColor={colors.gray[400]}
+          multiline
+          numberOfLines={4}
+          style={{ height: 90 }}
+        />
+        <Input
+          placeholder="Status da Tarefa"
+          placeholderTextColor={colors.gray[400]}
+        />
+        <View style={{ flexDirection: 'row', gap: 10, marginTop: 20 }}>
+          <Button.Root
+            onPress={() => setModalVisible(false)}
+            style={{ width: '50%', backgroundColor: colors.gray[500] }}
+          >
+            <Button.Title>Cancelar</Button.Title>
+          </Button.Root>
+          <Button.Root
+            onPress={() => setModalVisible(false)}
+            style={{ width: '50%' }}
+          >
+            <Button.Title>Salvar</Button.Title>
+          </Button.Root>
         </View>
-      </Modal> */}
+      </Popup>
     </View>
   );
 }

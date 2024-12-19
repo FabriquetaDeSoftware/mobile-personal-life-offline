@@ -1,4 +1,4 @@
-import { colors } from '@/src/styles/colors';
+import { colors, fontFamily } from '@/src/styles/theme';
 import { StyleSheet } from 'react-native';
 
 export const s = StyleSheet.create({
@@ -23,11 +23,5 @@ export const s = StyleSheet.create({
     elevation: 5,
     gap: 10,
     marginTop: 24,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 15,
-    textAlign: 'center',
   },
 });
