@@ -10,7 +10,6 @@ export const s = StyleSheet.create({
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row',
     padding: 12,
     gap: 10,
   },

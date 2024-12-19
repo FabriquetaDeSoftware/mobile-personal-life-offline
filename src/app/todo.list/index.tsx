@@ -13,14 +13,14 @@ export default function TodoLists() {
   const categories = [
     { id: '1', name: 'Concluidos' },
     { id: '2', name: 'Pendentes' },
-    { id: '3', name: 'Excluidos' },
+    { id: '3', name: 'Lixeira' },
   ];
 
   const tasks = [
     { id: '1', content: 'Tarefa 1', status: 'Concluido' },
     { id: '2', content: 'Tarefa 2', status: 'Pendente' },
-    { id: '3', content: 'Tarefa 3', status: 'Excluido' },
-    { id: '4', content: 'Tarefa 4', status: 'Excluido' },
+    { id: '3', content: 'Tarefa 3', status: 'Lixeira' },
+    { id: '4', content: 'Tarefa 4', status: 'Lixeira' },
     { id: '5', content: 'Tarefa 5', status: 'Pendente' },
     { id: '6', content: 'Tarefa 6', status: 'Concluido' },
     { id: '7', content: 'Tarefa 7', status: 'Concluido' },
@@ -38,7 +38,7 @@ export default function TodoLists() {
   const categoryMap: { [key: string]: string } = {
     '1': 'Concluido',
     '2': 'Pendente',
-    '3': 'Excluido',
+    '3': 'Lixeira',
   };
 
   const filteredTasks = tasks.filter(
@@ -47,16 +47,16 @@ export default function TodoLists() {
 
   return (
     <View style={{ flex: 1, padding: 40, gap: 40, marginTop: 24 }}>
-      <View style={{ gap: 10 }}>
+      <View>
         <Categories
           data={categories}
           selected={selectedCategory}
           onSelect={handleSelectCategory}
-          style={{ flex: 1, justifyContent: 'space-between' }}
+          style={{ justifyContent: 'space-between' }}
         />
       </View>
 
-      <Cards data={filteredTasks} />
+      <Cards data={filteredTasks}></Cards>
 
       <View style={{ flexDirection: 'row', gap: 10 }}>
         <Button.Root

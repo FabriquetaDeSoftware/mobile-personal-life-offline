@@ -1,13 +1,13 @@
-import { Pressable, Text, View } from 'react-native';
+import { Text, View, ViewProps } from 'react-native';
 import { s } from './styles';
 import { Button } from '../../button';
 import { colors } from '@/src/styles/colors';
 
-interface Props {
+interface Props extends ViewProps {
   content: string;
 }
 
-export function Card({ content }: Props) {
+export function Card({ content, children }: Props) {
   return (
     <View>
       <View style={s.containerText}>

@@ -6,5 +6,6 @@ export const s = StyleSheet.create({
   },
   content: {
     gap: 8,
+    flexGrow: 1,
   },
 });
