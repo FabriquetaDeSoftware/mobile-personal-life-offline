@@ -11,8 +11,9 @@ export const s = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: colors.gray[200],
-    borderRadius: 10,
-    padding: 20,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 20,
     width: '100%',
     shadowColor: colors.black.dark,
     shadowOffset: { width: 0, height: 5 },
@@ -20,6 +21,7 @@ export const s = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     gap: 10,
+    marginTop: 24,
   },
   modalTitle: {
     fontSize: 18,

@@ -29,20 +29,20 @@ export function Popup({}: Props) {
             placeholderTextColor={colors.gray[400]}
           />
 
-          {/* <View style={{ flexDirection: 'row', gap: 10, marginTop: 20 }}> */}
-          <Button.Root
-            // onPress={() => setModalVisible(false)}
-            style={{ width: '50%', backgroundColor: colors.gray[500] }}
-          >
-            <Button.Title>Cancelar</Button.Title>
-          </Button.Root>
-          <Button.Root
-            // onPress={() => setModalVisible(false)}
-            style={{ width: '50%' }}
-          >
-            <Button.Title>Salvar</Button.Title>
-          </Button.Root>
-          {/* </View> */}
+          <View style={{ flexDirection: 'row', gap: 10, marginTop: 20 }}>
+            <Button.Root
+              // onPress={() => setModalVisible(false)}
+              style={{ width: '50%', backgroundColor: colors.gray[500] }}
+            >
+              <Button.Title>Cancelar</Button.Title>
+            </Button.Root>
+            <Button.Root
+              // onPress={() => setModalVisible(false)}
+              style={{ width: '50%' }}
+            >
+              <Button.Title>Salvar</Button.Title>
+            </Button.Root>
+          </View>
         </View>
       </View>
     </Modal>
