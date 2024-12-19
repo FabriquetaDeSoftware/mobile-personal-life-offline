@@ -51,33 +51,21 @@ export default function TodoLists() {
           onSelect={handleSelectCategory}
           style={{ flex: 1, justifyContent: 'space-between' }}
         />
-
-        <View>
-          <Input
-            multiline
-            numberOfLines={4}
-            placeholder="Adicionar tarefa"
-            placeholderTextColor={colors.gray[400]}
-          />
-          <Button.Root
-            style={{
-              borderTopStartRadius: 0,
-              borderTopEndRadius: 0,
-              borderBottomStartRadius: 8,
-              borderBottomEndRadius: 8,
-              height: 45,
-            }}
-          >
-            <Button.Title>Adicionar</Button.Title>
-          </Button.Root>
-        </View>
       </View>
 
       <Cards data={filteredTasks} />
 
-      <Button.Root onPress={() => router.back()}>
-        <Button.Title>Voltar</Button.Title>
-      </Button.Root>
+      <View style={{ flexDirection: 'row', gap: 10 }}>
+        <Button.Root
+          onPress={() => router.back()}
+          style={{ width: '50%', backgroundColor: colors.gray[500] }}
+        >
+          <Button.Title>Voltar</Button.Title>
+        </Button.Root>
+        <Button.Root onPress={() => router.back()} style={{ width: '50%' }}>
+          <Button.Title>Inserir</Button.Title>
+        </Button.Root>
+      </View>
     </View>
   );
 }
