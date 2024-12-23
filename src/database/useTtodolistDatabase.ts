@@ -1,9 +1,15 @@
 import { useSQLiteContext } from 'expo-sqlite';
 
+export enum TodoStatus {
+  Pending = 'pending',
+  Completed = 'completed',
+  Trash = 'trash',
+}
+
 interface todoListDatabase {
   id: number;
   content: string;
-  status: string;
+  status: TodoStatus;
 }
 
 export async function useTodoListDatabase() {

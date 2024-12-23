@@ -8,7 +8,11 @@ import { Cards } from '@/src/components/cards';
 import { colors } from '@/src/styles/colors';
 import { Popup } from '@/src/components/popup';
 import { fontFamily } from '@/src/styles/theme';
-import { useTodoListDatabase } from '@/src/database/useTtodolistDatabase';
+import {
+  TodoStatus,
+  useTodoListDatabase,
+} from '@/src/database/useTtodolistDatabase';
+import { Picker } from '@react-native-picker/picker';
 
 export default function TodoLists() {
   const categories = [
@@ -21,19 +25,13 @@ export default function TodoLists() {
     { id: '1', content: 'Tarefa 1', status: 'Concluido' },
     { id: '2', content: 'Tarefa 2', status: 'Pendente' },
     { id: '3', content: 'Tarefa 3', status: 'Lixeira' },
-    { id: '4', content: 'Tarefa 4', status: 'Lixeira' },
-    { id: '5', content: 'Tarefa 5', status: 'Pendente' },
-    { id: '6', content: 'Tarefa 6', status: 'Concluido' },
-    { id: '7', content: 'Tarefa 7', status: 'Concluido' },
-    { id: '8', content: 'Tarefa 8', status: 'Concluido' },
-    { id: '9', content: 'Tarefa 9', status: 'Concluido' },
   ];
 
   const [selectedCategory, setSelectedCategory] = useState<string>('2');
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   const [content, setContent] = useState('');
-  const [status, setStatus] = useState('pending');
+  const [status, setStatus] = useState<TodoStatus>(TodoStatus.Pending);
 
   const handleSelectCategory = (id: string) => {
     setSelectedCategory(id);
@@ -48,15 +46,16 @@ export default function TodoLists() {
   const filteredTasks = tasks.filter(
     (task) => task.status === categoryMap[selectedCategory]
   );
+  const [selectedValue, setSelectedValue] = useState('pending');
 
-  const todoListDatabase = useTodoListDatabase();
-  async function create() {
-    try {
-      (await todoListDatabase).create({ content, status });
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  // const todoListDatabase = await useTodoListDatabase();
+  // async function create() {
+  //   try {
+  //     const response = await todoListDatabase.create({ content, status });
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
 
   console.log(content);
   return (
@@ -130,10 +129,21 @@ export default function TodoLists() {
           onChangeText={setContent}
           value={content}
         />
-        <Input
-          placeholder="Status da Tarefa"
-          placeholderTextColor={colors.gray[400]}
-        />
+        <Picker
+          selectedValue={selectedValue}
+          onValueChange={(itemValue) => setSelectedValue(itemValue)}
+          style={{
+            backgroundColor: colors.gray[100],
+            borderRadius: 8,
+            borderWidth: 1,
+            borderColor: colors.gray[300],
+          }}
+          itemStyle={{ color: 'black' }}
+        >
+          <Picker.Item label="Concluído" value={TodoStatus.Completed} />
+          <Picker.Item label="Pendente" value={TodoStatus.Pending} />
+          <Picker.Item label="Lixeira" value={TodoStatus.Trash} />
+        </Picker>
         <View style={{ flexDirection: 'row', gap: 10, marginTop: 20 }}>
           <Button.Root
             onPress={() => setModalVisible(false)}
