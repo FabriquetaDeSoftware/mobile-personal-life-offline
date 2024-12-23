@@ -11,6 +11,8 @@ import {
 import { Loading } from '../components/loading';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
+import { SQLiteProvider } from 'expo-sqlite';
+import { initializeDatabase } from '../database/initializeDatabase';
 
 export default function Layout() {
   const [fontsLoaded] = useFonts({
@@ -28,12 +30,17 @@ export default function Layout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <StatusBar style="dark" />
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            contentStyle: { backgroundColor: colors.gray[200] },
-          }}
-        />
+        <SQLiteProvider
+          databaseName="personal_life.db"
+          onInit={initializeDatabase}
+        >
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              contentStyle: { backgroundColor: colors.gray[200] },
+            }}
+          />
+        </SQLiteProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

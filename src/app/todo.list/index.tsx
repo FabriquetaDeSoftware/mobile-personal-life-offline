@@ -8,6 +8,7 @@ import { Cards } from '@/src/components/cards';
 import { colors } from '@/src/styles/colors';
 import { Popup } from '@/src/components/popup';
 import { fontFamily } from '@/src/styles/theme';
+import { useTodoListDatabase } from '@/src/database/useTtodolistDatabase';
 
 export default function TodoLists() {
   const categories = [
@@ -31,6 +32,9 @@ export default function TodoLists() {
   const [selectedCategory, setSelectedCategory] = useState<string>('2');
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
+  const [content, setContent] = useState('');
+  const [status, setStatus] = useState('pending');
+
   const handleSelectCategory = (id: string) => {
     setSelectedCategory(id);
   };
@@ -45,6 +49,16 @@ export default function TodoLists() {
     (task) => task.status === categoryMap[selectedCategory]
   );
 
+  const todoListDatabase = useTodoListDatabase();
+  async function create() {
+    try {
+      (await todoListDatabase).create({ content, status });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  console.log(content);
   return (
     <View style={{ flex: 1, padding: 40, gap: 40, marginTop: 24 }}>
       <View>
@@ -113,6 +127,8 @@ export default function TodoLists() {
           multiline
           numberOfLines={4}
           style={{ height: 90 }}
+          onChangeText={setContent}
+          value={content}
         />
         <Input
           placeholder="Status da Tarefa"
