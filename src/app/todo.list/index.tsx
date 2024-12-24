@@ -46,7 +46,6 @@ export default function TodoLists() {
   const filteredTasks = tasks.filter(
     (task) => task.status === categoryMap[selectedCategory]
   );
-  const [selectedValue, setSelectedValue] = useState('pending');
 
   // const todoListDatabase = await useTodoListDatabase();
   // async function create() {
@@ -57,7 +56,7 @@ export default function TodoLists() {
   //   }
   // }
 
-  console.log(content);
+  console.log(status);
   return (
     <View style={{ flex: 1, padding: 40, gap: 40, marginTop: 24 }}>
       <View>
@@ -130,8 +129,8 @@ export default function TodoLists() {
           value={content}
         />
         <Picker
-          selectedValue={selectedValue}
-          onValueChange={(itemValue) => setSelectedValue(itemValue)}
+          selectedValue={status}
+          onValueChange={(itemValue) => setStatus(itemValue)}
           style={{
             backgroundColor: colors.gray[100],
             borderRadius: 8,
@@ -146,7 +145,11 @@ export default function TodoLists() {
         </Picker>
         <View style={{ flexDirection: 'row', gap: 10, marginTop: 20 }}>
           <Button.Root
-            onPress={() => setModalVisible(false)}
+            onPress={() => {
+              setModalVisible(false),
+                setContent(''),
+                setStatus(TodoStatus.Pending);
+            }}
             style={{ width: '50%', backgroundColor: colors.gray[500] }}
           >
             <Button.Title>Cancelar</Button.Title>
