@@ -1,4 +1,4 @@
-import { Modal, ModalProps, Text, View } from 'react-native';
+import { Modal, ModalProps, View } from 'react-native';
 import { s } from './styles';
 
 interface Props extends ModalProps {
