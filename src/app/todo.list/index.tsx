@@ -15,13 +15,13 @@ import {
 import { Picker } from '@react-native-picker/picker';
 
 export default function TodoLists() {
-  const categories = [
-    { id: '1', name: 'Concluidos', status: 'completed' },
-    { id: '2', name: 'Pendentes', status: 'pending' },
-    { id: '3', name: 'Lixeira', status: 'trash' },
+  const categories: { id: string; name: string; status: TodoStatus }[] = [
+    { id: '1', name: 'Concluidos', status: TodoStatus.Completed },
+    { id: '2', name: 'Pendentes', status: TodoStatus.Pending },
+    { id: '3', name: 'Lixeira', status: TodoStatus.Trash },
   ];
 
-  const tasks: any = [];
+  const tasks: { id: string; content: string; status: TodoStatus }[] = [];
 
   const [selectedCategory, setSelectedCategory] = useState<string>('2');
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -34,9 +34,9 @@ export default function TodoLists() {
   };
 
   const categoryMap: { [key: string]: string } = {
-    '1': 'Concluido',
-    '2': 'Pendente',
-    '3': 'Lixeira',
+    '1': TodoStatus.Completed,
+    '2': TodoStatus.Pending,
+    '3': TodoStatus.Trash,
   };
 
   const filteredTasks = tasks.filter(
