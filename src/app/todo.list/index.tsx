@@ -11,21 +11,17 @@ import { fontFamily } from '@/src/styles/theme';
 import {
   TodoStatus,
   useTodoListDatabase,
-} from '@/src/database/useTtodolistDatabase';
+} from '@/src/database/useTodolistDatabase';
 import { Picker } from '@react-native-picker/picker';
 
 export default function TodoLists() {
   const categories = [
-    { id: '1', name: 'Concluidos' },
-    { id: '2', name: 'Pendentes' },
-    { id: '3', name: 'Lixeira' },
+    { id: '1', name: 'Concluidos', status: 'completed' },
+    { id: '2', name: 'Pendentes', status: 'pending' },
+    { id: '3', name: 'Lixeira', status: 'trash' },
   ];
 
-  const tasks = [
-    { id: '1', content: 'Tarefa 1', status: 'Concluido' },
-    { id: '2', content: 'Tarefa 2', status: 'Pendente' },
-    { id: '3', content: 'Tarefa 3', status: 'Lixeira' },
-  ];
+  const tasks: any = [];
 
   const [selectedCategory, setSelectedCategory] = useState<string>('2');
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -44,7 +40,7 @@ export default function TodoLists() {
   };
 
   const filteredTasks = tasks.filter(
-    (task) => task.status === categoryMap[selectedCategory]
+    (task: any) => task.status === categoryMap[selectedCategory]
   );
 
   // const todoListDatabase = await useTodoListDatabase();
@@ -108,46 +104,55 @@ export default function TodoLists() {
       </View>
 
       <Popup isVisible={modalVisible}>
-        <Text
-          style={{
-            fontSize: 18,
-            fontFamily: fontFamily.bold,
-            marginBottom: 15,
-            textAlign: 'center',
-          }}
-        >
-          Nova Tarefa
-        </Text>
-        <Input
-          placeholder="Digite o nome da tarefa"
-          placeholderTextColor={colors.gray[400]}
-          multiline
-          numberOfLines={4}
-          style={{ height: 90 }}
-          onChangeText={setContent}
-          value={content}
-        />
-        <Picker
-          selectedValue={status}
-          onValueChange={(itemValue) => setStatus(itemValue)}
-          style={{
-            backgroundColor: colors.gray[100],
-            borderRadius: 8,
-            borderWidth: 1,
-            borderColor: colors.gray[300],
-          }}
-          itemStyle={{ color: 'black' }}
-        >
-          <Picker.Item label="Concluído" value={TodoStatus.Completed} />
-          <Picker.Item label="Pendente" value={TodoStatus.Pending} />
-          <Picker.Item label="Lixeira" value={TodoStatus.Trash} />
-        </Picker>
+        <View>
+          <Text
+            style={{
+              fontSize: 18,
+              fontFamily: fontFamily.bold,
+              marginBottom: 15,
+              textAlign: 'center',
+            }}
+          >
+            Nova Tarefa
+          </Text>
+        </View>
+
+        <View>
+          <Input
+            placeholder="Digite o nome da tarefa"
+            placeholderTextColor={colors.gray[400]}
+            multiline
+            numberOfLines={4}
+            style={{ height: 90 }}
+            onChangeText={setContent}
+            value={content}
+          />
+        </View>
+
+        <View>
+          <Picker
+            selectedValue={status}
+            onValueChange={(itemValue) => setStatus(itemValue)}
+            style={{
+              backgroundColor: colors.gray[100],
+              borderRadius: 8,
+              borderWidth: 1,
+              borderColor: colors.gray[300],
+            }}
+            itemStyle={{ color: 'black' }}
+          >
+            <Picker.Item label="Concluído" value={TodoStatus.Completed} />
+            <Picker.Item label="Pendente" value={TodoStatus.Pending} />
+            <Picker.Item label="Lixeira" value={TodoStatus.Trash} />
+          </Picker>
+        </View>
+
         <View style={{ flexDirection: 'row', gap: 10, marginTop: 20 }}>
           <Button.Root
             onPress={() => {
-              setModalVisible(false),
-                setContent(''),
-                setStatus(TodoStatus.Pending);
+              setModalVisible(false);
+              setContent('');
+              setStatus(TodoStatus.Pending);
             }}
             style={{ width: '50%', backgroundColor: colors.gray[500] }}
           >
