@@ -1,4 +1,11 @@
-import { Modal, ModalProps, View } from 'react-native';
+import React from 'react';
+import {
+  Modal,
+  ModalProps,
+  View,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 import { s } from './styles';
 
 interface Props extends ModalProps {
@@ -14,9 +21,11 @@ export function Popup({ isVisible = false, children, ...rest }: Props) {
       onRequestClose={() => !isVisible}
       {...rest}
     >
-      <View style={s.modalOverlay}>
-        <View style={s.modalContent}>{children}</View>
-      </View>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <View style={s.modalOverlay}>
+          <View style={s.modalContent}>{children}</View>
+        </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 }
