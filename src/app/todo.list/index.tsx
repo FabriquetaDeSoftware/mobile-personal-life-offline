@@ -21,7 +21,14 @@ export default function TodoLists() {
     { id: '3', name: 'Lixeira', status: TodoStatus.Trash },
   ];
 
-  const tasks: { id: string; content: string; status: TodoStatus }[] = [];
+  const tasks: { id: string; content: string; status: TodoStatus }[] = [
+    // { id: '1', content: 'Concluidos 1', status: TodoStatus.Completed },
+    // { id: '2', content: 'Pendentes 1', status: TodoStatus.Pending },
+    // { id: '3', content: 'Lixeira 1', status: TodoStatus.Trash },
+    // { id: '4', content: 'Concluidos 2', status: TodoStatus.Completed },
+    // { id: '5', content: 'Pendentes 2', status: TodoStatus.Pending },
+    // { id: '6', content: 'Lixeira 2', status: TodoStatus.Trash },
+  ];
 
   const [selectedCategory, setSelectedCategory] = useState<string>('2');
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -40,7 +47,7 @@ export default function TodoLists() {
   };
 
   const filteredTasks = tasks.filter(
-    (task: any) => task.status === categoryMap[selectedCategory]
+    (task) => task.status === categoryMap[selectedCategory]
   );
 
   // const todoListDatabase = await useTodoListDatabase();
