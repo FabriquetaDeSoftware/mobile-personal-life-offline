@@ -175,7 +175,10 @@ export default function TodoLists() {
           </Button.Root>
           <Button.Root
             onPress={() => {
-              setModalVisible(false), create(contentModal, statusModal);
+              setModalVisible(false);
+              setContentModal('');
+              setStatusModal(TodoStatus.Pending);
+              create(contentModal, statusModal);
             }}
             style={{ width: '50%' }}
           >
