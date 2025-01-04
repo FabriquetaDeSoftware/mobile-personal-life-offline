@@ -3,7 +3,7 @@ import { s } from './styles';
 import { Card } from './card';
 
 interface Data {
-  id: string;
+  id: number;
   content: string;
   status: string;
 }
@@ -16,7 +16,7 @@ export function Cards({ data, children }: Props) {
   return (
     <FlatList
       data={data}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => <Card content={item.content}>{children}</Card>}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={s.content}

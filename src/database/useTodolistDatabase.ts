@@ -6,13 +6,13 @@ export enum TodoStatus {
   Trash = 'trash',
 }
 
-interface todoListDatabase {
+export interface todoListDatabase {
   id: number;
   content: string;
   status: TodoStatus;
 }
 
-export async function useTodoListDatabase() {
+export function useTodoListDatabase() {
   const database = useSQLiteContext();
 
   async function create(data: Omit<todoListDatabase, 'id'>) {
@@ -26,9 +26,9 @@ export async function useTodoListDatabase() {
     try {
       const result = await statement.executeAsync([data.content, data.status]);
 
-      const id = result.lastInsertRowId.toLocaleString();
+      const insertedRowId = result.lastInsertRowId.toLocaleString();
 
-      return { id };
+      return { insertedRowId };
     } catch (error) {
       throw error;
     } finally {
@@ -38,13 +38,15 @@ export async function useTodoListDatabase() {
 
   async function read(status: TodoStatus) {
     const query = /* sql */ `
-      SELECT *
-      FROM todoList
-      WHERE status = ?;
-    `;
+        SELECT *
+        FROM todoList
+        WHERE status = ?;
+      `;
 
     try {
-      const result = await database.getAllAsync(query, [status]);
+      const result = await database.getAllAsync<todoListDatabase>(query, [
+        status,
+      ]);
 
       return result;
     } catch (error) {

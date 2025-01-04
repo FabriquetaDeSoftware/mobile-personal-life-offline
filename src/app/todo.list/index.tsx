@@ -11,6 +11,7 @@ import { fontFamily } from '@/src/styles/theme';
 import {
   TodoStatus,
   useTodoListDatabase,
+  todoListDatabase,
 } from '@/src/database/useTodolistDatabase';
 import { Picker } from '@react-native-picker/picker';
 
@@ -21,7 +22,7 @@ export default function TodoLists() {
     { id: '3', name: 'Lixeira', status: TodoStatus.Trash },
   ];
 
-  const tasks: { id: string; content: string; status: TodoStatus }[] = [];
+  const [tasks, setTasks] = useState<todoListDatabase[]>([]);
 
   const [selectedCategory, setSelectedCategory] = useState<string>('2');
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -45,8 +46,8 @@ export default function TodoLists() {
     (task) => task.status === categoryMap[selectedCategory]
   );
 
+  const todoListDatabase = useTodoListDatabase();
   async function create(content: string, status: TodoStatus) {
-    const todoListDatabase = await useTodoListDatabase();
     try {
       const response = await todoListDatabase.create({ content, status });
 
@@ -57,11 +58,9 @@ export default function TodoLists() {
   }
 
   async function read(status: TodoStatus) {
-    const todoListDatabase = await useTodoListDatabase();
     try {
       const response = await todoListDatabase.read(status);
-
-      return { response };
+      setTasks(response);
     } catch (error) {
       console.error(error);
     }
