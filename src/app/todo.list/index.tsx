@@ -21,20 +21,15 @@ export default function TodoLists() {
     { id: '3', name: 'Lixeira', status: TodoStatus.Trash },
   ];
 
-  const tasks: { id: string; content: string; status: TodoStatus }[] = [
-    // { id: '1', content: 'Concluidos 1', status: TodoStatus.Completed },
-    // { id: '2', content: 'Pendentes 1', status: TodoStatus.Pending },
-    // { id: '3', content: 'Lixeira 1', status: TodoStatus.Trash },
-    // { id: '4', content: 'Concluidos 2', status: TodoStatus.Completed },
-    // { id: '5', content: 'Pendentes 2', status: TodoStatus.Pending },
-    // { id: '6', content: 'Lixeira 2', status: TodoStatus.Trash },
-  ];
+  const tasks: { id: string; content: string; status: TodoStatus }[] = [];
 
   const [selectedCategory, setSelectedCategory] = useState<string>('2');
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
-  const [content, setContent] = useState('');
-  const [status, setStatus] = useState<TodoStatus>(TodoStatus.Pending);
+  const [contentModal, setContentModal] = useState('');
+  const [statusModal, setStatusModal] = useState<TodoStatus>(
+    TodoStatus.Pending
+  );
 
   const handleSelectCategory = (id: string) => {
     setSelectedCategory(id);
@@ -50,15 +45,29 @@ export default function TodoLists() {
     (task) => task.status === categoryMap[selectedCategory]
   );
 
-  // const todoListDatabase = await useTodoListDatabase();
-  // async function create() {
-  //   try {
-  //     const response = await todoListDatabase.create({ content, status });
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
+  async function create(content: string, status: TodoStatus) {
+    const todoListDatabase = await useTodoListDatabase();
+    try {
+      const response = await todoListDatabase.create({ content, status });
 
+      return { response };
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function read(status: TodoStatus) {
+    const todoListDatabase = await useTodoListDatabase();
+    try {
+      const response = await todoListDatabase.read(status);
+
+      return { response };
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  read(TodoStatus.Pending);
   return (
     <View style={{ flex: 1, padding: 40, gap: 40, marginTop: 24 }}>
       <View>
@@ -131,15 +140,15 @@ export default function TodoLists() {
             multiline
             numberOfLines={4}
             style={{ height: 90 }}
-            onChangeText={setContent}
-            value={content}
+            onChangeText={setContentModal}
+            value={contentModal}
           />
         </View>
 
         <View>
           <Picker
-            selectedValue={status}
-            onValueChange={(itemValue) => setStatus(itemValue)}
+            selectedValue={statusModal}
+            onValueChange={(itemValue) => setStatusModal(itemValue)}
             style={{
               backgroundColor: colors.gray[100],
               borderRadius: 8,
@@ -158,15 +167,17 @@ export default function TodoLists() {
           <Button.Root
             onPress={() => {
               setModalVisible(false);
-              setContent('');
-              setStatus(TodoStatus.Pending);
+              setContentModal('');
+              setStatusModal(TodoStatus.Pending);
             }}
             style={{ width: '50%', backgroundColor: colors.gray[500] }}
           >
             <Button.Title>Cancelar</Button.Title>
           </Button.Root>
           <Button.Root
-            onPress={() => setModalVisible(false)}
+            onPress={() => {
+              setModalVisible(false), create(contentModal, statusModal);
+            }}
             style={{ width: '50%' }}
           >
             <Button.Title>Salvar</Button.Title>

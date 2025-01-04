@@ -16,10 +16,12 @@ export async function useTodoListDatabase() {
   const database = useSQLiteContext();
 
   async function create(data: Omit<todoListDatabase, 'id'>) {
-    const statement = await database.prepareAsync(/* sql */ `
-        INSERT INTO todoList (content, status)
-        VALUES (?, ?);
-    `);
+    const query = /* sql */ `
+      INSERT INTO todoList (content, status)
+      VALUES (?, ?);
+    `;
+
+    const statement = await database.prepareAsync(query);
 
     try {
       const result = await statement.executeAsync([data.content, data.status]);
@@ -29,10 +31,26 @@ export async function useTodoListDatabase() {
       return { id };
     } catch (error) {
       throw error;
+    } finally {
+      await statement.finalizeAsync();
     }
   }
 
-  async function read() {}
+  async function read(status: TodoStatus) {
+    const query = /* sql */ `
+      SELECT *
+      FROM todoList
+      WHERE status = ?;
+    `;
+
+    try {
+      const result = await database.getAllAsync(query, [status]);
+
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
 
   async function update() {}
 
