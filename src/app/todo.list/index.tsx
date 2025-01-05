@@ -2,7 +2,7 @@ import { Text, View } from 'react-native';
 import { Button } from '../../components/button';
 import { router } from 'expo-router';
 import { Categories } from '@/src/components/categories';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Input } from '@/src/components/input';
 import { Cards } from '@/src/components/cards';
 import { colors } from '@/src/styles/colors';
@@ -46,27 +46,39 @@ export default function TodoLists() {
     (task) => task.status === categoryMap[selectedCategory]
   );
 
-  const todoListDatabase = useTodoListDatabase();
-  async function create(content: string, status: TodoStatus) {
-    try {
-      const response = await todoListDatabase.create({ content, status });
+  function CRUD() {
+    const todoListDatabase = useTodoListDatabase();
 
-      return { response };
-    } catch (error) {
-      console.error(error);
+    async function create(content: string, status: TodoStatus) {
+      try {
+        const response = await todoListDatabase.create({ content, status });
+
+        return { response };
+      } catch (error) {
+        console.error(error);
+      }
     }
-  }
 
-  async function read(status: TodoStatus) {
-    try {
-      const response = await todoListDatabase.read(status);
-      setTasks(response);
-    } catch (error) {
-      console.error(error);
+    async function read(status: TodoStatus) {
+      try {
+        const response = await todoListDatabase.read(status);
+
+        setTasks(response);
+      } catch (error) {
+        console.error(error);
+      }
     }
-  }
 
-  read(TodoStatus.Pending);
+    return { create, read };
+  }
+  const CRUD_METHODS = CRUD();
+
+  useEffect(() => {
+    const response = categoryMap[selectedCategory] as TodoStatus;
+
+    CRUD_METHODS.read(response);
+  }, [selectedCategory]);
+
   return (
     <View style={{ flex: 1, padding: 40, gap: 40, marginTop: 24 }}>
       <View>
@@ -178,7 +190,7 @@ export default function TodoLists() {
               setModalVisible(false);
               setContentModal('');
               setStatusModal(TodoStatus.Pending);
-              create(contentModal, statusModal);
+              CRUD_METHODS.create(contentModal, statusModal);
             }}
             style={{ width: '50%' }}
           >
