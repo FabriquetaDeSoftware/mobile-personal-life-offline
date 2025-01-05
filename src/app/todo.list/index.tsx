@@ -52,6 +52,7 @@ export default function TodoLists() {
     async function create(content: string, status: TodoStatus) {
       try {
         const response = await todoListDatabase.create({ content, status });
+        CRUD_METHODS.read(categoryMap[selectedCategory] as TodoStatus);
 
         return { response };
       } catch (error) {
@@ -69,7 +70,18 @@ export default function TodoLists() {
       }
     }
 
-    return { create, read };
+    async function removePermaly(id: number) {
+      try {
+        const response = await todoListDatabase.remove(id);
+        setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+
+        return { response };
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    return { create, read, removePermaly };
   }
   const CRUD_METHODS = CRUD();
 
@@ -91,28 +103,33 @@ export default function TodoLists() {
       </View>
 
       <Cards data={filteredTasks}>
-        <Button.Root
-          style={{
-            width: '50%',
-            borderTopStartRadius: 0,
-            borderTopEndRadius: 0,
-            borderBottomEndRadius: 0,
-            backgroundColor: colors.gray[500],
-          }}
-        >
-          <Button.Title>Editar</Button.Title>
-        </Button.Root>
-        <Button.Root
-          style={{
-            width: '50%',
-            borderTopStartRadius: 0,
-            borderTopEndRadius: 0,
-            borderBottomStartRadius: 0,
-            backgroundColor: colors.red.base,
-          }}
-        >
-          <Button.Title>Excluir</Button.Title>
-        </Button.Root>
+        {filteredTasks.map((task) => (
+          <View key={task.id} style={{ flexDirection: 'row' }}>
+            <Button.Root
+              style={{
+                width: '50%',
+                borderTopStartRadius: 0,
+                borderTopEndRadius: 0,
+                borderBottomEndRadius: 0,
+                backgroundColor: colors.gray[500],
+              }}
+            >
+              <Button.Title>Editar</Button.Title>
+            </Button.Root>
+            <Button.Root
+              style={{
+                width: '50%',
+                borderTopStartRadius: 0,
+                borderTopEndRadius: 0,
+                borderBottomStartRadius: 0,
+                backgroundColor: colors.red.base,
+              }}
+              onPress={() => CRUD_METHODS.removePermaly(task.id)}
+            >
+              <Button.Title>Excluir</Button.Title>
+            </Button.Root>
+          </View>
+        ))}
       </Cards>
 
       <View style={{ flexDirection: 'row', gap: 10 }}>

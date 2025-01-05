@@ -54,9 +54,27 @@ export function useTodoListDatabase() {
     }
   }
 
-  async function update() {}
+  async function update(id: number, data: Omit<todoListDatabase, 'id'>) {
+    const query = /* sql */ ``;
+  }
 
-  async function remove() {}
+  async function remove(id: number) {
+    const query = /* sql */ `
+      DELETE FROM todoList
+      WHERE id = ?;
+    `;
+
+    const statement = await database.prepareAsync(query);
+    try {
+      await statement.executeAsync([id]);
+
+      return { success: true };
+    } catch (error) {
+      throw error;
+    } finally {
+      await statement.finalizeAsync();
+    }
+  }
 
   return { create, read, update, remove };
 }
