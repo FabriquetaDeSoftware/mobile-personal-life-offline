@@ -17,14 +17,13 @@ import { Picker } from '@react-native-picker/picker';
 
 export default function TodoLists() {
   const categories: { id: string; name: string; status: TodoStatus }[] = [
-    { id: '1', name: 'Concluidos', status: TodoStatus.Completed },
-    { id: '2', name: 'Pendentes', status: TodoStatus.Pending },
-    { id: '3', name: 'Lixeira', status: TodoStatus.Trash },
+    { id: '1', name: 'Pendentes', status: TodoStatus.Pending },
+    { id: '2', name: 'Concluidos', status: TodoStatus.Completed },
   ];
 
   const [tasks, setTasks] = useState<todoListDatabase[]>([]);
 
-  const [selectedCategory, setSelectedCategory] = useState<string>('2');
+  const [selectedCategory, setSelectedCategory] = useState<string>('1');
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   const [contentModal, setContentModal] = useState('');
@@ -32,14 +31,15 @@ export default function TodoLists() {
     TodoStatus.Pending
   );
 
+  const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
+
   const handleSelectCategory = (id: string) => {
     setSelectedCategory(id);
   };
 
   const categoryMap: { [key: string]: string } = {
-    '1': TodoStatus.Completed,
-    '2': TodoStatus.Pending,
-    '3': TodoStatus.Trash,
+    '1': TodoStatus.Pending,
+    '2': TodoStatus.Completed,
   };
 
   const filteredTasks = tasks.filter(
@@ -65,6 +65,7 @@ export default function TodoLists() {
         const response = await todoListDatabase.read(status);
 
         setTasks(response);
+        console.log(response);
       } catch (error) {
         console.error(error);
       }
@@ -76,6 +77,8 @@ export default function TodoLists() {
     ) {
       try {
         const response = await todoListDatabase.update(id, data);
+
+        CRUD_METHODS.read(categoryMap[selectedCategory] as TodoStatus);
 
         return { response };
       } catch (error) {
@@ -111,7 +114,9 @@ export default function TodoLists() {
           data={categories}
           selected={selectedCategory}
           onSelect={handleSelectCategory}
-          style={{ justifyContent: 'space-between' }}
+          style={{
+            justifyContent: 'space-between',
+          }}
         />
       </View>
 
@@ -126,7 +131,13 @@ export default function TodoLists() {
                 borderBottomEndRadius: 0,
                 backgroundColor: colors.gray[500],
               }}
-              onPress={() => console.log('Editando tarefa')}
+              onPress={() => {
+                console.log('Editing task ID:', task.id);
+                setModalVisible(true);
+                setContentModal(task.content);
+                setStatusModal(task.status);
+                setEditingTaskId(task.id);
+              }}
             >
               <Button.Title>Editar</Button.Title>
             </Button.Root>
@@ -199,9 +210,8 @@ export default function TodoLists() {
             }}
             itemStyle={{ color: 'black' }}
           >
-            <Picker.Item label="Concluído" value={TodoStatus.Completed} />
             <Picker.Item label="Pendente" value={TodoStatus.Pending} />
-            <Picker.Item label="Lixeira" value={TodoStatus.Trash} />
+            <Picker.Item label="Concluído" value={TodoStatus.Completed} />
           </Picker>
         </View>
 
@@ -211,6 +221,7 @@ export default function TodoLists() {
               setModalVisible(false);
               setContentModal('');
               setStatusModal(TodoStatus.Pending);
+              setEditingTaskId(null);
             }}
             style={{ width: '50%', backgroundColor: colors.gray[500] }}
           >
@@ -219,9 +230,19 @@ export default function TodoLists() {
           <Button.Root
             onPress={() => {
               setModalVisible(false);
+
+              if (editingTaskId) {
+                CRUD_METHODS.update(editingTaskId, {
+                  content: contentModal,
+                  status: statusModal,
+                });
+              } else {
+                CRUD_METHODS.create(contentModal, statusModal);
+              }
+
               setContentModal('');
               setStatusModal(TodoStatus.Pending);
-              CRUD_METHODS.create(contentModal, statusModal);
+              setEditingTaskId(null);
             }}
             style={{ width: '50%' }}
           >
