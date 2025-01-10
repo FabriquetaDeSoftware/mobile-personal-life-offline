@@ -3,7 +3,6 @@ import { useSQLiteContext } from 'expo-sqlite';
 export enum TodoStatus {
   Pending = 'pending',
   Completed = 'completed',
-  Trash = 'trash',
 }
 
 export interface todoListDatabase {
