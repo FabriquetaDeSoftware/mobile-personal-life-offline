@@ -43,7 +43,7 @@ export default function TodoLists() {
     async function create(content: string, status: TodoStatus) {
       try {
         const response = await todoListDatabase.create({ content, status });
-        //await CRUD_METHODS.read(categoryMap[selectedCategory]);
+        await CRUD_METHODS.read(selectedCategory);
         return { response };
       } catch (error) {
         console.error(error);
@@ -53,7 +53,6 @@ export default function TodoLists() {
     async function read(status: TodoStatus) {
       try {
         const response = await todoListDatabase.read(status);
-        console.log(status);
         setTasks(response);
       } catch (error) {
         console.error(error);
@@ -66,7 +65,7 @@ export default function TodoLists() {
     ) {
       try {
         const response = await todoListDatabase.update(id, data);
-        //await CRUD_METHODS.read(categoryMap[selectedCategory]);
+        await CRUD_METHODS.read(selectedCategory);
         return { response };
       } catch (error) {
         console.error(error);
@@ -119,9 +118,9 @@ export default function TodoLists() {
             onPress={() => {
               console.log('editando', tasks[1].id);
               setModalVisible(true);
-              // setContentModal(task.content);
-              // setStatusModal(task.status);
-              // setEditingTaskId(task.id);
+              setContentModal(tasks[1].content);
+              setStatusModal(tasks[1].status);
+              setEditingTaskId(tasks[1].id);
             }}
           >
             <Button.Title>Editar</Button.Title>
