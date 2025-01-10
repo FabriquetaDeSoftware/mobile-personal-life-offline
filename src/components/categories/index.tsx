@@ -1,16 +1,18 @@
 import { FlatList, StyleProp, ViewStyle } from 'react-native';
 import { s } from './styles';
 import { Category } from './category';
+import { TodoStatus } from '@/src/database/useTodolistDatabase';
 
 export type CategoriesProps = {
   id: string;
   name: string;
+  status: TodoStatus;
 }[];
 
 type Props = {
   data: CategoriesProps;
   selected: string;
-  onSelect: (id: string) => void;
+  onSelect: (status: TodoStatus) => void;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -22,8 +24,8 @@ export function Categories({ data, selected, onSelect, style }: Props) {
       renderItem={({ item }) => (
         <Category
           text={item.name}
-          onPress={() => onSelect(item.id)}
-          isSelected={item.id === selected}
+          onPress={() => onSelect(item.status)}
+          isSelected={item.status === selected}
         />
       )}
       horizontal

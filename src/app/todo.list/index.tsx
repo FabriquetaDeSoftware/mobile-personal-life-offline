@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 import { Button } from '../../components/button';
 import { router } from 'expo-router';
 import { Categories } from '@/src/components/categories';
@@ -14,6 +14,7 @@ import {
   todoListDatabase,
 } from '@/src/database/useTodolistDatabase';
 import { Picker } from '@react-native-picker/picker';
+import { Card } from '@/src/components/cards/card';
 
 export default function TodoLists() {
   const categories: { id: string; name: string; status: TodoStatus }[] = [
@@ -22,7 +23,9 @@ export default function TodoLists() {
   ];
 
   const [tasks, setTasks] = useState<todoListDatabase[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>('1');
+  const [selectedCategory, setSelectedCategory] = useState<TodoStatus>(
+    TodoStatus.Pending
+  );
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [contentModal, setContentModal] = useState('');
   const [statusModal, setStatusModal] = useState<TodoStatus>(
@@ -30,18 +33,9 @@ export default function TodoLists() {
   );
   const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
 
-  const handleSelectCategory = (id: string) => {
-    setSelectedCategory(id);
+  const handleSelectCategory = (status: TodoStatus) => {
+    setSelectedCategory(status);
   };
-
-  const categoryMap: { [key: string]: TodoStatus } = {
-    '1': TodoStatus.Pending,
-    '2': TodoStatus.Completed,
-  };
-
-  const filteredTasks = tasks.filter(
-    (task) => task.status === categoryMap[selectedCategory]
-  );
 
   function CRUD() {
     const todoListDatabase = useTodoListDatabase();
@@ -49,7 +43,7 @@ export default function TodoLists() {
     async function create(content: string, status: TodoStatus) {
       try {
         const response = await todoListDatabase.create({ content, status });
-        await CRUD_METHODS.read(categoryMap[selectedCategory]);
+        //await CRUD_METHODS.read(categoryMap[selectedCategory]);
         return { response };
       } catch (error) {
         console.error(error);
@@ -59,6 +53,7 @@ export default function TodoLists() {
     async function read(status: TodoStatus) {
       try {
         const response = await todoListDatabase.read(status);
+        console.log(status);
         setTasks(response);
       } catch (error) {
         console.error(error);
@@ -71,7 +66,7 @@ export default function TodoLists() {
     ) {
       try {
         const response = await todoListDatabase.update(id, data);
-        await CRUD_METHODS.read(categoryMap[selectedCategory]);
+        //await CRUD_METHODS.read(categoryMap[selectedCategory]);
         return { response };
       } catch (error) {
         console.error(error);
@@ -95,9 +90,7 @@ export default function TodoLists() {
   const CRUD_METHODS = CRUD();
 
   useEffect(() => {
-    const response = categoryMap[selectedCategory] as TodoStatus;
-
-    CRUD_METHODS.read(response);
+    CRUD_METHODS.read(selectedCategory as TodoStatus);
   }, [selectedCategory]);
 
   return (
@@ -113,9 +106,8 @@ export default function TodoLists() {
         />
       </View>
 
-      {/* <Cards data={filteredTasks}> */}
-      {filteredTasks.map((task) => (
-        <View key={task.id} style={{ flexDirection: 'row' }}>
+      <Cards data={tasks}>
+        <View style={{ flexDirection: 'row' }}>
           <Button.Root
             style={{
               width: '50%',
@@ -125,11 +117,11 @@ export default function TodoLists() {
               backgroundColor: colors.gray[500],
             }}
             onPress={() => {
-              console.log('editando', task.id);
+              console.log('editando', tasks[1].id);
               setModalVisible(true);
-              setContentModal(task.content);
-              setStatusModal(task.status);
-              setEditingTaskId(task.id);
+              // setContentModal(task.content);
+              // setStatusModal(task.status);
+              // setEditingTaskId(task.id);
             }}
           >
             <Button.Title>Editar</Button.Title>
@@ -142,13 +134,12 @@ export default function TodoLists() {
               borderBottomStartRadius: 0,
               backgroundColor: colors.red.base,
             }}
-            onPress={() => CRUD_METHODS.remove(task.id)}
+            // onPress={() => CRUD_METHODS.remove(task.id)}
           >
             <Button.Title>Excluir</Button.Title>
           </Button.Root>
         </View>
-      ))}
-      {/* </Cards> */}
+      </Cards>
 
       <View style={{ flexDirection: 'row', gap: 10 }}>
         <Button.Root
