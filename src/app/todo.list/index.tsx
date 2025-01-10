@@ -70,7 +70,20 @@ export default function TodoLists() {
       }
     }
 
-    async function removePermaly(id: number) {
+    async function update(
+      id: number,
+      data: Partial<Omit<todoListDatabase, 'id'>>
+    ) {
+      try {
+        const response = await todoListDatabase.update(id, data);
+
+        return { response };
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    async function remove(id: number) {
       try {
         const response = await todoListDatabase.remove(id);
         setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
@@ -81,7 +94,7 @@ export default function TodoLists() {
       }
     }
 
-    return { create, read, removePermaly };
+    return { create, read, update, remove };
   }
   const CRUD_METHODS = CRUD();
 
@@ -113,6 +126,7 @@ export default function TodoLists() {
                 borderBottomEndRadius: 0,
                 backgroundColor: colors.gray[500],
               }}
+              onPress={() => console.log('Editando tarefa')}
             >
               <Button.Title>Editar</Button.Title>
             </Button.Root>
@@ -124,7 +138,7 @@ export default function TodoLists() {
                 borderBottomStartRadius: 0,
                 backgroundColor: colors.red.base,
               }}
-              onPress={() => CRUD_METHODS.removePermaly(task.id)}
+              onPress={() => CRUD_METHODS.remove(task.id)}
             >
               <Button.Title>Excluir</Button.Title>
             </Button.Root>

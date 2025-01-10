@@ -54,8 +54,41 @@ export function useTodoListDatabase() {
     }
   }
 
-  async function update(id: number, data: Omit<todoListDatabase, 'id'>) {
-    const query = /* sql */ ``;
+  async function update(
+    id: number,
+    data: Partial<Omit<todoListDatabase, 'id'>>
+  ) {
+    const updates = [];
+    const values = [];
+
+    if (data.content) {
+      updates.push('content = ?');
+      values.push(data.content);
+    }
+
+    if (data.status) {
+      updates.push('status = ?');
+      values.push(data.status);
+    }
+
+    values.push(id);
+
+    const query = /* sql */ `
+      UPDATE todoList
+      SET ${updates.join(', ')}
+      WHERE id = ?;
+    `;
+
+    const statement = await database.prepareAsync(query);
+    try {
+      const result = await statement.executeAsync(values);
+
+      return result;
+    } catch (error) {
+      throw error;
+    } finally {
+      await statement.finalizeAsync();
+    }
   }
 
   async function remove(id: number) {
