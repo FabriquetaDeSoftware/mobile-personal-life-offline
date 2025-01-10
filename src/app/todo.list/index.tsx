@@ -22,22 +22,19 @@ export default function TodoLists() {
   ];
 
   const [tasks, setTasks] = useState<todoListDatabase[]>([]);
-
   const [selectedCategory, setSelectedCategory] = useState<string>('1');
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-
   const [contentModal, setContentModal] = useState('');
   const [statusModal, setStatusModal] = useState<TodoStatus>(
     TodoStatus.Pending
   );
-
   const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
 
   const handleSelectCategory = (id: string) => {
     setSelectedCategory(id);
   };
 
-  const categoryMap: { [key: string]: string } = {
+  const categoryMap: { [key: string]: TodoStatus } = {
     '1': TodoStatus.Pending,
     '2': TodoStatus.Completed,
   };
@@ -52,8 +49,7 @@ export default function TodoLists() {
     async function create(content: string, status: TodoStatus) {
       try {
         const response = await todoListDatabase.create({ content, status });
-        CRUD_METHODS.read(categoryMap[selectedCategory] as TodoStatus);
-
+        await CRUD_METHODS.read(categoryMap[selectedCategory]);
         return { response };
       } catch (error) {
         console.error(error);
@@ -63,9 +59,7 @@ export default function TodoLists() {
     async function read(status: TodoStatus) {
       try {
         const response = await todoListDatabase.read(status);
-
         setTasks(response);
-        console.log(response);
       } catch (error) {
         console.error(error);
       }
@@ -77,12 +71,10 @@ export default function TodoLists() {
     ) {
       try {
         const response = await todoListDatabase.update(id, data);
-
-        CRUD_METHODS.read(categoryMap[selectedCategory] as TodoStatus);
-
+        await CRUD_METHODS.read(categoryMap[selectedCategory]);
         return { response };
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
 
@@ -99,6 +91,7 @@ export default function TodoLists() {
 
     return { create, read, update, remove };
   }
+
   const CRUD_METHODS = CRUD();
 
   useEffect(() => {
@@ -120,42 +113,42 @@ export default function TodoLists() {
         />
       </View>
 
-      <Cards data={filteredTasks}>
-        {filteredTasks.map((task) => (
-          <View key={task.id} style={{ flexDirection: 'row' }}>
-            <Button.Root
-              style={{
-                width: '50%',
-                borderTopStartRadius: 0,
-                borderTopEndRadius: 0,
-                borderBottomEndRadius: 0,
-                backgroundColor: colors.gray[500],
-              }}
-              onPress={() => {
-                console.log('Editing task ID:', task.id);
-                setModalVisible(true);
-                setContentModal(task.content);
-                setStatusModal(task.status);
-                setEditingTaskId(task.id);
-              }}
-            >
-              <Button.Title>Editar</Button.Title>
-            </Button.Root>
-            <Button.Root
-              style={{
-                width: '50%',
-                borderTopStartRadius: 0,
-                borderTopEndRadius: 0,
-                borderBottomStartRadius: 0,
-                backgroundColor: colors.red.base,
-              }}
-              onPress={() => CRUD_METHODS.remove(task.id)}
-            >
-              <Button.Title>Excluir</Button.Title>
-            </Button.Root>
-          </View>
-        ))}
-      </Cards>
+      {/* <Cards data={filteredTasks}> */}
+      {filteredTasks.map((task) => (
+        <View key={task.id} style={{ flexDirection: 'row' }}>
+          <Button.Root
+            style={{
+              width: '50%',
+              borderTopStartRadius: 0,
+              borderTopEndRadius: 0,
+              borderBottomEndRadius: 0,
+              backgroundColor: colors.gray[500],
+            }}
+            onPress={() => {
+              console.log('editando', task.id);
+              setModalVisible(true);
+              setContentModal(task.content);
+              setStatusModal(task.status);
+              setEditingTaskId(task.id);
+            }}
+          >
+            <Button.Title>Editar</Button.Title>
+          </Button.Root>
+          <Button.Root
+            style={{
+              width: '50%',
+              borderTopStartRadius: 0,
+              borderTopEndRadius: 0,
+              borderBottomStartRadius: 0,
+              backgroundColor: colors.red.base,
+            }}
+            onPress={() => CRUD_METHODS.remove(task.id)}
+          >
+            <Button.Title>Excluir</Button.Title>
+          </Button.Root>
+        </View>
+      ))}
+      {/* </Cards> */}
 
       <View style={{ flexDirection: 'row', gap: 10 }}>
         <Button.Root
@@ -182,7 +175,7 @@ export default function TodoLists() {
               textAlign: 'center',
             }}
           >
-            Nova Tarefa
+            {editingTaskId ? 'Editar Tarefa' : 'Nova Tarefa'}
           </Text>
         </View>
 
@@ -231,7 +224,7 @@ export default function TodoLists() {
             onPress={() => {
               setModalVisible(false);
 
-              if (editingTaskId) {
+              if (editingTaskId !== null) {
                 CRUD_METHODS.update(editingTaskId, {
                   content: contentModal,
                   status: statusModal,
