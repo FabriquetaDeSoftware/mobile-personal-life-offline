@@ -112,6 +112,9 @@ export default function TodoLists() {
           style={{
             justifyContent: 'space-between',
           }}
+          scrollEnabled={false}
+          horizontal
+          showsHorizontalScrollIndicator={false}
         />
       </View>
 
