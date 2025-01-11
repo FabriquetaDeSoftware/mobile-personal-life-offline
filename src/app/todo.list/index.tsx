@@ -1,4 +1,4 @@
-import { FlatList, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Button } from '../../components/button';
 import { router } from 'expo-router';
 import { Categories } from '@/src/components/categories';
@@ -14,7 +14,6 @@ import {
   todoListDatabase,
 } from '@/src/database/useTodolistDatabase';
 import { Picker } from '@react-native-picker/picker';
-import { Card } from '@/src/components/cards/card';
 
 export default function TodoLists() {
   const categories: { id: string; name: string; status: TodoStatus }[] = [
@@ -105,40 +104,7 @@ export default function TodoLists() {
         />
       </View>
 
-      <Cards data={tasks}>
-        <View style={{ flexDirection: 'row' }}>
-          <Button.Root
-            style={{
-              width: '50%',
-              borderTopStartRadius: 0,
-              borderTopEndRadius: 0,
-              borderBottomEndRadius: 0,
-              backgroundColor: colors.gray[500],
-            }}
-            onPress={() => {
-              console.log('editando', tasks[1].id);
-              setModalVisible(true);
-              setContentModal(tasks[1].content);
-              setStatusModal(tasks[1].status);
-              setEditingTaskId(tasks[1].id);
-            }}
-          >
-            <Button.Title>Editar</Button.Title>
-          </Button.Root>
-          <Button.Root
-            style={{
-              width: '50%',
-              borderTopStartRadius: 0,
-              borderTopEndRadius: 0,
-              borderBottomStartRadius: 0,
-              backgroundColor: colors.red.base,
-            }}
-            // onPress={() => CRUD_METHODS.remove(task.id)}
-          >
-            <Button.Title>Excluir</Button.Title>
-          </Button.Root>
-        </View>
-      </Cards>
+      <Cards data={tasks} />
 
       <View style={{ flexDirection: 'row', gap: 10 }}>
         <Button.Root

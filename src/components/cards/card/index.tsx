@@ -1,7 +1,5 @@
 import { Text, View, ViewProps } from 'react-native';
 import { s } from './styles';
-import { Button } from '../../button';
-import { colors } from '@/src/styles/colors';
 
 interface Props extends ViewProps {
   content: string;
