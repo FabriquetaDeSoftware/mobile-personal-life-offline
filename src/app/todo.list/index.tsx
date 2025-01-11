@@ -36,6 +36,17 @@ export default function TodoLists() {
     setSelectedCategory(status);
   };
 
+  const handleEditTask = (task: todoListDatabase) => {
+    setModalVisible(true);
+    setContentModal(task.content);
+    setStatusModal(task.status);
+    setEditingTaskId(task.id);
+  };
+
+  const handleDeleteTask = (task: todoListDatabase) => {
+    CRUD_METHODS.remove(task.id);
+  };
+
   function CRUD() {
     const todoListDatabase = useTodoListDatabase();
 
@@ -104,7 +115,7 @@ export default function TodoLists() {
         />
       </View>
 
-      <Cards data={tasks} />
+      <Cards data={tasks} onEdit={handleEditTask} onDelete={handleDeleteTask} />
 
       <View style={{ flexDirection: 'row', gap: 10 }}>
         <Button.Root

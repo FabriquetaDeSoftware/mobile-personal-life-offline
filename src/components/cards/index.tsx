@@ -3,18 +3,21 @@ import { s } from './styles';
 import { Card } from './card';
 import { Button } from '../button';
 import { colors } from '@/src/styles/colors';
+import { TodoStatus } from '@/src/database/useTodolistDatabase';
 
 interface Data {
   id: number;
   content: string;
-  status: string;
+  status: TodoStatus;
 }
 
 interface Props {
   data: Data[];
+  onEdit: (task: Data) => void;
+  onDelete: (task: Data) => void;
 }
 
-export function Cards({ data }: Props) {
+export function Cards({ data, onEdit, onDelete }: Props) {
   return (
     <FlatList
       data={data}
@@ -31,11 +34,7 @@ export function Cards({ data }: Props) {
                 backgroundColor: colors.gray[500],
               }}
               onPress={() => {
-                console.log('editando', item.id);
-                // setModalVisible(true);
-                // setContentModal(tasks[1].content);
-                // setStatusModal(tasks[1].status);
-                // setEditingTaskId(tasks[1].id);
+                onEdit(item);
               }}
             >
               <Button.Title>Editar</Button.Title>
@@ -49,8 +48,7 @@ export function Cards({ data }: Props) {
                 backgroundColor: colors.red.base,
               }}
               onPress={() => {
-                console.log('excluindo', item.id);
-                // CRUD_METHODS.remove(task.id);
+                onDelete(item);
               }}
             >
               <Button.Title>Excluir</Button.Title>
