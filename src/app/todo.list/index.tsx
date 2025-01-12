@@ -15,7 +15,7 @@ import {
 } from '@/src/database/useTodolistDatabase';
 import { Picker } from '@react-native-picker/picker';
 
-export default function TodoLists() {
+export default function TodoList() {
   const [tasks, setTasks] = useState<todoListDatabase[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<TodoStatus>(
     TodoStatus.Pending

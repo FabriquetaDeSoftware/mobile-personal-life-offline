@@ -14,14 +14,19 @@ export default function Home() {
       <Welcome />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ gap: 40 }}>
-          <Button.Root style={{ height: 150 }}>
+          <Button.Root
+            onPress={() => router.navigate(`/finances`)}
+            style={{ height: 150 }}
+          >
             <Button.Title>Finanças</Button.Title>
             <Button.Icon icon={IconCoin} />
           </Button.Root>
+
           <Button.Root style={{ height: 150 }}>
             <Button.Title>Agenda</Button.Title>
             <Button.Icon icon={IconCalendarTime} />
           </Button.Root>
+
           <Button.Root
             onPress={() => router.navigate(`/todo.list`)}
             style={{ height: 150 }}

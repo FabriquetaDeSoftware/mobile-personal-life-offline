@@ -13,8 +13,8 @@ interface Data {
 
 interface Props {
   data: Data[];
-  onEdit: (task: Data) => void;
-  onDelete: (task: Data) => void;
+  onEdit?: (task: Data) => void;
+  onDelete?: (task: Data) => void;
 }
 
 export function Cards({ data, onEdit, onDelete }: Props) {
@@ -34,11 +34,14 @@ export function Cards({ data, onEdit, onDelete }: Props) {
                 backgroundColor: colors.gray[500],
               }}
               onPress={() => {
-                onEdit(item);
+                if (onEdit) {
+                  onEdit(item);
+                }
               }}
             >
               <Button.Title>Editar</Button.Title>
             </Button.Root>
+
             <Button.Root
               style={{
                 width: '50%',
@@ -48,7 +51,9 @@ export function Cards({ data, onEdit, onDelete }: Props) {
                 backgroundColor: colors.red.base,
               }}
               onPress={() => {
-                onDelete(item);
+                if (onDelete) {
+                  onDelete(item);
+                }
               }}
             >
               <Button.Title>Excluir</Button.Title>
