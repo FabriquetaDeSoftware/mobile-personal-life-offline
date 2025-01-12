@@ -4,8 +4,7 @@ import { Category } from './category';
 import { TodoStatus } from '@/src/database/useTodolistDatabase';
 
 export interface CategoriesProps {
-  id: string;
-  name: string;
+  text: string;
   status: TodoStatus;
 }
 
@@ -26,10 +25,10 @@ export function Categories({
   return (
     <FlatList
       data={data}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item.status}
       renderItem={({ item }) => (
         <Category
-          text={item.name}
+          text={item.text}
           onPress={() => onSelect(item.status)}
           isSelected={item.status === selected}
         />

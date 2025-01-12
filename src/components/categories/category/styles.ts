@@ -3,7 +3,7 @@ import { colors, fontFamily } from '../../../styles/theme';
 
 export const s = StyleSheet.create({
   container: {
-    height: 40,
+    height: 'auto',
     backgroundColor: colors.gray[100],
     borderWidth: 1,
     borderColor: colors.gray[300],
@@ -12,6 +12,7 @@ export const s = StyleSheet.create({
     alignItems: 'center',
     padding: 12,
     gap: 10,
+    flexGrow: 1,
   },
   name: {
     fontSize: 14,

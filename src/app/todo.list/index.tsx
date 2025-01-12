@@ -16,11 +16,6 @@ import {
 import { Picker } from '@react-native-picker/picker';
 
 export default function TodoLists() {
-  const categories: { id: string; name: string; status: TodoStatus }[] = [
-    { id: '1', name: 'Pendentes', status: TodoStatus.Pending },
-    { id: '2', name: 'Concluidos', status: TodoStatus.Completed },
-  ];
-
   const [tasks, setTasks] = useState<todoListDatabase[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<TodoStatus>(
     TodoStatus.Pending
@@ -102,16 +97,23 @@ export default function TodoLists() {
     CRUD_METHODS.read(selectedCategory as TodoStatus);
   }, [selectedCategory]);
 
+  const statusTranslations: Record<TodoStatus, string> = {
+    [TodoStatus.Pending]: 'Pendente',
+    [TodoStatus.Completed]: 'Concluído',
+  };
+
+  const categoriesData = Object.values(TodoStatus).map((status) => ({
+    status,
+    text: statusTranslations[status],
+  }));
+
   return (
     <View style={{ flex: 1, padding: 40, gap: 40, marginTop: 24 }}>
       <View>
         <Categories
-          data={categories}
+          data={categoriesData}
           selected={selectedCategory}
           onSelect={handleSelectCategory}
-          style={{
-            justifyContent: 'space-between',
-          }}
           scrollEnabled={false}
           horizontal
           showsHorizontalScrollIndicator={false}
