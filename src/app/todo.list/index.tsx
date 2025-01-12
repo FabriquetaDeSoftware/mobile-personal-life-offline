@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import { Text, View, Alert } from 'react-native';
 import { Button } from '../../components/button';
 import { router } from 'expo-router';
 import { Categories } from '@/src/components/categories';
@@ -46,6 +46,11 @@ export default function TodoLists() {
     const todoListDatabase = useTodoListDatabase();
 
     async function create(content: string, status: TodoStatus) {
+      if (!content.trim()) {
+        Alert.alert('Erro', 'O conteúdo da tarefa não pode estar vazio.');
+        return;
+      }
+
       try {
         const response = await todoListDatabase.create({ content, status });
         await CRUD_METHODS.read(selectedCategory);
@@ -68,6 +73,11 @@ export default function TodoLists() {
       id: number,
       data: Partial<Omit<todoListDatabase, 'id'>>
     ) {
+      if (!data.content?.trim()) {
+        Alert.alert('Erro', 'O conteúdo da tarefa não pode estar vazio.');
+        return;
+      }
+
       try {
         const response = await todoListDatabase.update(id, data);
         await CRUD_METHODS.read(selectedCategory);
@@ -153,7 +163,7 @@ export default function TodoLists() {
 
         <View>
           <Input
-            placeholder="Digite o nome da tarefa"
+            placeholder="Digite a tarefa"
             placeholderTextColor={colors.gray[400]}
             multiline
             numberOfLines={4}
