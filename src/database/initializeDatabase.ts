@@ -13,7 +13,7 @@ export async function initializeDatabase(database: SQLiteDatabase) {
     CREATE TABLE IF NOT EXISTS financeAccount (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
-        balance REAL NOT NULL CHECK(balance >= 0)
+        balance REAL NOT NULL 
     );
 
     -- -- Tabela de despesas

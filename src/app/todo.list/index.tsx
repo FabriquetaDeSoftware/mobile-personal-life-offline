@@ -161,9 +161,9 @@ export default function TodoList() {
           </Text>
         </View>
 
-        <View>
+        <View style={{ gap: 10 }}>
           <Input
-            placeholder="Digite a tarefa"
+            placeholder="Tarefa"
             placeholderTextColor={colors.gray[400]}
             multiline
             numberOfLines={4}
@@ -171,9 +171,7 @@ export default function TodoList() {
             onChangeText={setContentModal}
             value={contentModal}
           />
-        </View>
 
-        <View>
           <Picker
             selectedValue={statusModal}
             onValueChange={(itemValue) => setStatusModal(itemValue)}
