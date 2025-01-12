@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { colors, fontFamily } from '../../../styles/theme';
+
+const { width: screenWidth } = Dimensions.get('window');
 
 export const s = StyleSheet.create({
   container: {
@@ -12,7 +14,7 @@ export const s = StyleSheet.create({
     alignItems: 'center',
     padding: 12,
     gap: 10,
-    flexGrow: 1,
+    width: screenWidth / 2 - 44,
   },
   name: {
     fontSize: 14,

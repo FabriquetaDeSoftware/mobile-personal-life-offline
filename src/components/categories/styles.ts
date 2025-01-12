@@ -7,7 +7,7 @@ export const s = StyleSheet.create({
   content: {
     gap: 8,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     width: '100%',
   },
 });
