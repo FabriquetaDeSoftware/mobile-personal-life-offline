@@ -7,7 +7,6 @@ import { colors, fontFamily } from '@/src/styles/theme';
 import { todoListDatabase } from '@/src/database/useTodolistDatabase';
 import { Input } from '@/src/components/input';
 import { Popup } from '@/src/components/popup';
-import { Picker } from '@react-native-picker/picker';
 
 export default function Finances() {
   const [tasks, setTasks] = useState<todoListDatabase[]>([]);
